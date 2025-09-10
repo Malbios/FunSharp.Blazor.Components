@@ -9,17 +9,18 @@ module Accordion =
     
     type Item = {
         Label: string
+        Expanded: bool
         RenderAction: unit -> Node
     }
     
-    let render (allowMultipleOpen: bool) (initiallyExpanded: bool) (items: Item array) =
+    let render (allowMultipleOpen: bool) (items: Item array) =
         
         let accordionItems =
             [|
                 for item in items do
                     yield comp<RadzenAccordionItem> {
                         "Text" => item.Label
-                        "Selected" => initiallyExpanded
+                        "Selected" => item.Expanded
                         attr.fragment "ChildContent" (item.RenderAction ())
                     }
             |]
