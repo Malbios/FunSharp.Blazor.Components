@@ -12,19 +12,20 @@ module Accordion =
         RenderAction: unit -> Node
     }
     
-    let render (multiple: bool) (items: Item array) =
+    let render (allowMultipleOpen: bool) (initiallyExpanded: bool) (items: Item array) =
         
         let accordionItems =
             [|
                 for item in items do
                     yield comp<RadzenAccordionItem> {
                         "Text" => item.Label
+                        "Selected" => initiallyExpanded
                         attr.fragment "ChildContent" (item.RenderAction ())
                     }
             |]
             |> Helpers.renderArray
         
         comp<RadzenAccordion> {
-            "Multiple" => multiple
+            "Multiple" => allowMultipleOpen
             attr.fragment "Items" accordionItems
         }
