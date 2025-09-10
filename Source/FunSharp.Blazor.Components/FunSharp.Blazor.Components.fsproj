@@ -18,6 +18,7 @@
         <Compile Include="Button.fs"/>
         <Compile Include="IconButton.fs"/>
         <Compile Include="Accordion.fs"/>
+        <Compile Include="Tabs.fs" />
     </ItemGroup>
 
     <ItemGroup>
