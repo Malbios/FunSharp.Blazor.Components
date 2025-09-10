@@ -3,8 +3,6 @@
 open System
 open System.Web
 open Bolero
-open Bolero.Html
-open Radzen.Blazor
 
 [<RequireQualifiedAccess>]
 module ImageUrl =
@@ -12,10 +10,13 @@ module ImageUrl =
     let render (imageUrl: Uri option) =
             
         match imageUrl with
-        | None -> Node.Empty ()
+        | None ->
+            Node.Empty ()
+            
         | Some imageUrl ->
-            comp<RadzenLink> {
-                "Path" => $"{imageUrl}"
-                "Text" => (imageUrl |> FunSharp.Common.Uri.lastSegment |> HttpUtility.UrlDecode)
-                "Target" => "_blank"
-            }
+            
+            imageUrl
+            |> FunSharp.Common.Uri.lastSegment
+            |> HttpUtility.UrlDecode
+            |> Some
+            |> fun x -> Link.render x imageUrl
