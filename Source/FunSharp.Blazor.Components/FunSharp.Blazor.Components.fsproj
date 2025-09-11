@@ -14,6 +14,7 @@
         <Compile Include="ImagePreview.fs"/>
         <Compile Include="CheckBox.fs"/>
         <Compile Include="TextInput.fs"/>
+        <Compile Include="TextAreaInput.fs" />
         <Compile Include="DropDown.fs"/>
         <Compile Include="FileInput.fs"/>
         <Compile Include="Button.fs"/>
