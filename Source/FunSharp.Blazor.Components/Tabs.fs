@@ -8,6 +8,7 @@ open Radzen.Blazor
 module Tabs =
     
     type Item = {
+        Key: string
         Label: string
         RenderAction: unit -> Node
     }
@@ -17,7 +18,8 @@ module Tabs =
         let tabs =
             [|
                 for item in items do
-                    yield comp<RadzenTabsItem> {
+                    comp<RadzenTabsItem> {
+                        attr.key item.Key
                         "Text" => item.Label
                         attr.fragment "ChildContent" (item.RenderAction ())
                     }

@@ -8,11 +8,12 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module Button =
     
-    let render parent (onClick: unit -> unit) label =
+    let render parent (onClick: unit -> unit) (disabled: bool) label =
         
         let onClick = fun (_: MouseEventArgs) -> onClick ()
         
         comp<RadzenButton> {
             "Text" => label
+            "Disabled" => disabled
             "Click" => EventCallback.Factory.Create<MouseEventArgs>(parent, onClick)
         }
