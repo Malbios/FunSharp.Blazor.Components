@@ -8,7 +8,7 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module TextInput = // TODO: turn into Component because of statefulness
     
-    let render (update: string -> unit) (onEnter: string -> unit) placeholder currentValue =
+    let render (update: string -> unit) (onEnter: string -> unit) isReadOnly placeholder currentValue =
         
         let mutable savedValue = currentValue
         
@@ -30,4 +30,5 @@ module TextInput = // TODO: turn into Component because of statefulness
             
             "Value" => currentValue
             "Placeholder" => placeholder
+            "ReadOnly" => isReadOnly
         }
