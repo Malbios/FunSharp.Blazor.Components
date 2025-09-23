@@ -6,7 +6,7 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module TextAreaInput =
     
-    let render (update: string -> unit) placeholder currentValue =
+    let render (update: string -> unit) placeholder (rows: int) (columns: int) currentValue =
         
         let update (newValue: string) =
             if currentValue <> newValue then
@@ -20,4 +20,6 @@ module TextAreaInput =
             
             "Value" => currentValue
             "Placeholder" => placeholder
+            "Rows" => rows
+            "Cols" => columns
         }
