@@ -1,5 +1,6 @@
 ﻿namespace FunSharp.Blazor.Components
 
+open System.Threading.Tasks
 open Bolero.Html
 open Microsoft.AspNetCore.Components.Forms
 open Toolbelt.Blazor.FileDropZone
@@ -7,14 +8,27 @@ open Toolbelt.Blazor.FileDropZone
 [<RequireQualifiedAccess>]
 module FileInput =
     
-    let render allowMultiple (upload: InputFileChangeEventArgs -> unit) =
+    let render allowMultiple (upload: InputFileChangeEventArgs -> unit) (disabled: bool) =
         
         comp<FileDropZone> {
             attr.style "padding: 2rem; border: 2px solid gray; border-radius: 8px;"
             
             comp<InputFile> {
-              attr.multiple allowMultiple
-              attr.callback "OnChange" upload
+                attr.disabled disabled
+                attr.multiple allowMultiple
+                attr.callback "OnChange" upload
+            }
+        }
+    
+    let renderAsync allowMultiple (upload: InputFileChangeEventArgs -> Task) (disabled: bool) =
+        
+        comp<FileDropZone> {
+            attr.style "padding: 2rem; border: 2px solid gray; border-radius: 8px;"
+            
+            comp<InputFile> {
+                attr.disabled disabled
+                attr.multiple allowMultiple
+                attr.task.callback "OnChange" upload
             }
         }
 
