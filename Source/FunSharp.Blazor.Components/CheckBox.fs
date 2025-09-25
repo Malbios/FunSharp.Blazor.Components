@@ -8,7 +8,7 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module CheckBox =
     
-    let render (update: bool -> unit) label currentValue =
+    let render (update: bool -> unit) label isReadOnly currentValue =
         
         let update (newValue: bool) =
             if currentValue <> newValue then
@@ -26,6 +26,7 @@ module CheckBox =
                 
                 "Name" => guid.ToString()
                 "Value" => currentValue
+                "ReadOnly" => isReadOnly
             }
             
             comp<RadzenLabel> {

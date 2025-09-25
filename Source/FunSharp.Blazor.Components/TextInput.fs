@@ -6,7 +6,7 @@ open Microsoft.AspNetCore.Components.Web
 open Radzen.Blazor
 
 [<RequireQualifiedAccess>]
-module TextInput = // TODO: turn into Component because of statefulness
+module TextInput =
     
     let render (update: string -> unit) (onEnter: string -> unit) isReadOnly placeholder currentValue =
         

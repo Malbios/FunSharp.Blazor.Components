@@ -8,7 +8,7 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module DropDown =
     
-    let render (update: string -> unit) label placeholder values currentValue =
+    let render (update: string -> unit) label isReadOnly placeholder values currentValue =
         
         let update (newValue: string) =
             if currentValue <> newValue then
@@ -35,5 +35,6 @@ module DropDown =
                 "Placeholder" => placeholder
                 "Data" => values
                 "Value" => currentValue
+                "ReadOnly" => isReadOnly
             }
         }
