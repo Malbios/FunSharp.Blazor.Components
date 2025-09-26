@@ -2,33 +2,20 @@
 
 open Bolero.Html
 open Microsoft.AspNetCore.Components
-open Microsoft.AspNetCore.Components.Web
 open Radzen.Blazor
 
 [<RequireQualifiedAccess>]
 module TextInput =
     
-    let render (update: string -> unit) (onEnter: string -> unit) isReadOnly placeholder currentValue =
+    let render (onChange: string -> unit) (onInput: string -> unit) isReadOnly placeholder currentValue =
         
-        let mutable savedValue = currentValue
-        
-        let update (newValue: string) =
-            if newValue <> currentValue then
-                update newValue
-                
-        let onKeyUp (args: KeyboardEventArgs) =
-            if args.Key = "Enter" then
-                onEnter savedValue
-                
-        let onChange (args: ChangeEventArgs) =
-            savedValue <- args.Value.ToString()
+        let mutable text = currentValue
         
         comp<RadzenTextBox> {
-            attr.callback "Change" update
-            attr.callback "onkeyup" onKeyUp
-            attr.callback "oninput" onChange
+            attr.callback "Change" onChange
+            attr.callback "oninput" (fun (args: ChangeEventArgs) -> args.Value.ToString() |> onInput)
             
-            "Value" => currentValue
+            "Value" => text
             "Placeholder" => placeholder
             "ReadOnly" => isReadOnly
         }
