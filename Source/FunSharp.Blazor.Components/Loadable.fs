@@ -3,6 +3,7 @@
 open Bolero
 open Bolero.Html
 
+[<RequireQualifiedAccess>]
 type Loadable<'T> =
     | NotLoaded
     | Loading
@@ -15,10 +16,10 @@ module Loadable =
     let render<'T> (item: Loadable<'T>) (renderAction: 'T -> Node) =
         
         match item with
-        | Loaded data ->
+        | Loadable.Loaded data ->
             renderAction data
         
-        | LoadingFailed error ->
+        | Loadable.LoadingFailed error ->
             concat {
                 p { error.Message }
                 p { error.StackTrace }

@@ -21,6 +21,7 @@
         <Compile Include="IconButton.fs"/>
         <Compile Include="Accordion.fs"/>
         <Compile Include="Tabs.fs" />
+        <Compile Include="Pager.fs" />
     </ItemGroup>
 
     <ItemGroup>
