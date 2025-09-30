@@ -17,10 +17,14 @@ module Helpers =
             for node in nodes do node
         }
         
-    let copyToClipboard (jsRuntime: IJSRuntime) (text: string) =
+    let copyToClipboard (js: IJSRuntime) (text: string) =
         
-        jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", [| box text |]) |> ignore
+        js.InvokeVoidAsync("navigator.clipboard.writeText", [| box text |]) |> ignore
         
     let readClipboard (js: IJSRuntime) =
         
-        js.InvokeAsync<string>("readClipboardText").AsTask() |> Async.AwaitTask
+        js.InvokeAsync<string>("navigator.clipboard.readText").AsTask() |> Async.AwaitTask
+        
+    let openInNewTab (js: IJSRuntime) (url: string) =
+        
+        js.InvokeVoidAsync($"window.open", [| box url; box "_blank" |]) |> ignore

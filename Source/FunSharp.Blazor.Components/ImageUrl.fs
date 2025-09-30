@@ -19,4 +19,4 @@ module ImageUrl =
             |> FunSharp.Common.Uri.lastSegment
             |> HttpUtility.UrlDecode
             |> Some
-            |> fun x -> Link.render x imageUrl
+            |> fun x -> Link.renderSimple x imageUrl
