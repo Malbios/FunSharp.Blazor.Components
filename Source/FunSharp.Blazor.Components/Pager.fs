@@ -1,6 +1,5 @@
 ﻿namespace FunSharp.Blazor.Components
 
-open Bolero
 open Bolero.Html
 open Radzen
 open Radzen.Blazor
@@ -8,24 +7,24 @@ open Radzen.Blazor
 [<RequireQualifiedAccess>]
 module Pager =
     
-    let render<'T> (total: int) (limit: int) (offset: int) (onPageChanged: int -> unit) (pageItems: 'T array) (renderAction: 'T -> Node) =
+    let render<'T> (total: int) (limit: int) (offset: int) (onPageChanged: int -> unit) =
         
-        let onPageChanged (args: PagerEventArgs) =
-            let newPageIndex = args.PageIndex - 1
-            printfn $"changing page from {offset / limit} to {newPageIndex}"
-            onPageChanged newPageIndex
+        let currentPage = (offset / limit)
+        let lastPage = (total / limit)
         
-        div {
-            [ for item in pageItems do renderAction item ]
-            |> Helpers.renderList
+        printfn $"currentPage: {currentPage} lastPage: {lastPage}"
+        
+        comp<RadzenStack> {
+            "Orientation" => Orientation.Horizontal
+            "Wrap" => FlexWrap.Wrap
+            "Gap" => "0.1rem"
             
-            printfn $"setting pager PageIndex to: {offset / limit}"
+            Button.render "|<" (fun () -> onPageChanged 0) (currentPage = 0)
+            Button.render "<" (fun () -> onPageChanged <| currentPage - 1) (currentPage = 0)
             
-            comp<RadzenPager> {
-                "Count" => total
-                "PageSize" => limit
-                "PageIndex" => offset / limit
-                
-                attr.callback "PageChanged" onPageChanged
-            }
+            for i in [0..total / limit] do
+                Button.render $"{i + 1}" (fun () -> onPageChanged i) (currentPage = i)
+            
+            Button.render ">" (fun () -> onPageChanged <| currentPage + 1) (currentPage = lastPage)
+            Button.render ">|" (fun () -> onPageChanged lastPage) (currentPage = lastPage)
         }
